@@ -17,11 +17,38 @@ class PlayerMove2D : MonoBehaviour
     {
         Vector2 horiz = Vector2.zero;
 
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.A)) // go left
+        {
             horiz = -transform.right;
-        else if (Input.GetKey(KeyCode.D))
+            transform.localScale = vector3(transform.localScale, 0, -1);
+        }
+        else if (Input.GetKey(KeyCode.D)) // go right
+        {
             horiz = transform.right;
+            transform.localScale = vector3(transform.localScale, 0, 1);
+        }
 
         transform.Translate(horiz * SPEED * Time.deltaTime, Space.World);
+    }
+    
+    Vector3 vector3(Vector3 v, int type, int value)
+    {
+        const int X = 0, Y = 1, Z = 2;
+        var temp = v;
+
+        switch(type)
+        {
+            case X:
+                temp.x = value;
+                break;
+            case Y:
+                temp.y = value;
+                break;
+            case Z:
+                temp.z = value;
+                break;
+        }
+
+        return temp;
     }
 } // class

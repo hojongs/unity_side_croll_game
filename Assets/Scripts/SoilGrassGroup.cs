@@ -10,7 +10,7 @@ public class SoilGrassGroup : MonoBehaviour
 
     void Awake()
     {
-        for (int i=0;i<CNT*2;i+=WIDTH)
+        for (int i=-CNT;i<=CNT;i+=WIDTH)
         {
             var instance = Instantiate(prefab, new Vector2(i,0), Quaternion.identity, transform);
         }

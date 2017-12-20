@@ -2,11 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 /**
  *  @brief 키보드 A,D를 입력받아 Player 좌우 Move
  */
-class PlayerMove2D : MonoBehaviour
+class PlayerKeyControl : NetworkBehaviour
 {
     public int SPEED;
     public int JUMP_POWER;
@@ -15,12 +16,18 @@ class PlayerMove2D : MonoBehaviour
 
     void Start()
     {
+        if (!isLocalPlayer)
+            return;
+
         rig = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
     }
 
     void Update()
     {
+        if (!isLocalPlayer)
+            return;
+
         var dir = input_move();
         act_move(dir);
 
@@ -48,13 +55,13 @@ class PlayerMove2D : MonoBehaviour
         if (dir == LEFT)
         {
             horiz = -transform.right;
-            transform.localScale = vector3(transform.localScale, 0, -1);
+            transform.localScale = Util.vector3(transform.localScale, Util.POS_TYPE.X, -1);
             anim.SetBool("walk", true);
         }
         else if (dir == RIGHT)
         {
             horiz = transform.right;
-            transform.localScale = vector3(transform.localScale, 0, 1);
+            transform.localScale = Util.vector3(transform.localScale, Util.POS_TYPE.X, 1);
             anim.SetBool("walk", true);
         }
         else
@@ -75,26 +82,5 @@ class PlayerMove2D : MonoBehaviour
             Debug.Log("jump");
             rig.AddForce(transform.up * JUMP_POWER);
         }
-    }
-
-    Vector3 vector3(Vector3 v, int type, int value)
-    {
-        const int X = 0, Y = 1, Z = 2;
-        var temp = v;
-
-        switch (type)
-        {
-            case X:
-                temp.x = value;
-                break;
-            case Y:
-                temp.y = value;
-                break;
-            case Z:
-                temp.z = value;
-                break;
-        }
-
-        return temp;
     }
 } // class

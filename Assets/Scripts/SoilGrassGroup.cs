@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * @brief local behaviour
+ */
 public class SoilGrassGroup : MonoBehaviour
 {
     public int CNT;
@@ -12,7 +15,7 @@ public class SoilGrassGroup : MonoBehaviour
     {
         for (int i=-CNT;i<=CNT;i+=WIDTH)
         {
-            var instance = Instantiate(prefab, new Vector2(i,0), Quaternion.identity, transform);
+            Instantiate(prefab, new Vector2(i,0), Quaternion.identity, transform);
         }
     }
 
